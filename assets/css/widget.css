@@ -1,0 +1,5 @@
+ul.ksps-resume-dashboard-widget li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

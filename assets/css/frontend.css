@@ -1,0 +1,130 @@
+div#ksps-resume-submit-form input,
+div#ksps-resume-submit-form label,
+div#ksps-resume-submit-form button
+{
+    margin:0;
+    border:0;
+    padding:0;
+    display:inline-block;
+    vertical-align:middle;
+    white-space:normal;
+    background:none;
+    line-height:1;
+}
+
+div#ksps-resume-submit-form input:focus
+{
+    outline: 0;
+    border-bottom: 1.5px solid #30a4d7 !important;
+}
+
+div#ksps-resume-submit-form input
+{
+    -webkit-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    box-sizing:content-box;
+}
+
+div#ksps-resume-submit-form button,
+input[type=reset],
+input[type=button],
+input[type=submit],
+input[type=checkbox],
+input[type=radio],
+select
+{
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+div#ksps-resume-submit-form input[type=email],
+div#ksps-resume-submit-form input[type=text]
+{
+    background: #effffd;
+    padding: 5px;
+    width: 100%;
+    border-bottom: 1.5px solid transparent;
+    font-size: 1rem;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+div#ksps-resume-submit-form input[type=file]
+{
+    font-size: 1rem;
+}
+
+div#ksps-resume-submit-form input[type=search]
+{
+    -webkit-appearance:textfield;
+    -webkit-box-sizing:content-box;
+}
+
+div#ksps-resume-submit-form button,
+div#ksps-resume-submit-form input[type="button"],
+div#ksps-resume-submit-form input[type="submit"]
+{
+    overflow: visible;
+    width: auto;
+    background-color: #1ea0c3;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 3px;
+}
+
+div#ksps-resume-submit-form ::-webkit-file-upload-button
+{
+    padding:0;
+    border:0;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+    padding: 5px;
+    border: 1px solid #dadada;
+}
+
+div#ksps-resume-submit-form form {
+    width: 100%;
+}
+
+div#ksps-resume-submit-form {
+    display: flex;
+    padding: 1em 1em;
+    background-color: #e5f8f7;
+    font-size: 1em;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    border: 1px solid #e6e3e3;
+    border-radius: 4px;
+}
+
+div#ksps-resume-submit-form .form-row {
+    flex-direction: column;
+}
+
+div#ksps-resume-submit-form .form-row label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+div#ksps-resume-submit-form .form-message-success {
+    color: #02e49b;
+}
+
+div#ksps-resume-submit-form .form-message-error {
+    color: #fd5d5d;
+}
+
+div#ksps-resume-submit-form .form-message-success span,
+div#ksps-resume-submit-form .form-message-error span {
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #d8d8d887;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: block;
+}
