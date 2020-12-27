@@ -106,8 +106,12 @@ final class Ksps_Resume {
  *
  * @return \Ksps_Resume
  */
-function Ksps_Resume() {
-    return Ksps_Resume::init();
+function ksps_resume_init() {
+    global $ksps_resume;
+
+    $ksps_resume = Ksps_Resume::init();
+
+    return $ksps_resume;
 }
 
-ksps_resume();
+ksps_resume_init();

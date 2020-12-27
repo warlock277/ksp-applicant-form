@@ -23,7 +23,7 @@ class Ajax {
 
 		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'ksps-resume-form' ) ) {
 			wp_send_json_error( [
-				'message' => __( 'Nonce verification failed!', 'ksps-resume-form' )
+				'message' => __( 'Nonce verification failed!', 'ksps-resume' )
 			] );
 		}
 
@@ -47,7 +47,7 @@ class Ajax {
 			$file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
 
 			if( !in_array( $file_extension, ['pdf', 'doc', 'docx' ]) ) {
-				$error  = __( 'Only pdf, doc or docx are allowed', 'ksps-resume-form' );
+				$error  = __( 'Only pdf, doc or docx are allowed', 'ksps-resume' );
 			}
 
 			$upload_file = wp_upload_bits( $file['name'] , null, file_get_contents($file['tmp_name']) );
@@ -89,16 +89,41 @@ class Ajax {
 		$insert_id = ksps_resume_insert_resume( $args );
 
 		if ( $insert_id ) {
+
+			$applicant_subject = ' Application Submitted Successfully';
+			$admin_subject = ' New Application for the post: ' . $post_name;
+
+			$applicant_message = '<p>Hello, ' . $first_name . '</p><p>Thank Your for applying for the post ' . $post_name . '</p>';
+			$admin_message = '<p>Theres a New Application for the post ' . $post_name . ' From ' . $first_name . ' ' . $last_name . '</p>';
+
+			$admin_email = get_option('admin_email');
+
+			add_filter( 'wp_mail_content_type', [ $this, 'set_html_content_type' ] );
+
+			if( !empty( $email ) ) {
+				wp_mail($email, $applicant_subject, $applicant_message);
+			}
+
+			if( !empty( $admin_email ) ) {
+				wp_mail($admin_email, $admin_subject, $admin_message);
+			}
+
+			remove_filter( 'wp_mail_content_type', [ $this, 'set_html_content_type' ] );
+
 			wp_send_json_success([
-				'message' => __( 'Application Submitted successfully!', 'ksps-resume-form' )
+				'message' => __( 'Application Submitted successfully!', 'ksps-resume' )
 			]);
 		} else {
 			wp_send_json_error([
-				'message' => __( 'Theres an error submitting application..', 'ksps-resume-form' )
+				'message' => __( 'Theres an error submitting application..', 'ksps-resume' )
 			]);
 		}
 
 
+	}
+
+	function set_html_content_type() {
+		return 'text/html';
 	}
 
 }

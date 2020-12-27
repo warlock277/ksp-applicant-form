@@ -40,7 +40,7 @@ class Installer {
 
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}applicant_submissions` (
+		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->base_prefix}applicant_submissions` (
           `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
           `first_name` varchar(100) NOT NULL DEFAULT '',
     	  `last_name` varchar(100) NOT NULL DEFAULT '',

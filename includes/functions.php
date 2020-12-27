@@ -11,19 +11,27 @@ function ksps_resume_insert_resume( $args = [] ) {
 	global $wpdb;
 
 	if ( empty( $args['first_name'] ) ) {
-		return new \WP_Error( 'no-name', __( 'You must provide first name.', 'ksps-resume' ) );
+		return new \WP_Error( 'no-first-name', __( 'You must provide first name.', 'ksps-resume' ) );
 	}
 
 	if ( empty( $args['last_name'] ) ) {
-		return new \WP_Error( 'no-name', __( 'You must provide last name.', 'ksps-resume' ) );
+		return new \WP_Error( 'no-last-name', __( 'You must provide last name.', 'ksps-resume' ) );
 	}
 
 	if ( empty( $args['email'] ) ) {
-		return new \WP_Error( 'no-name', __( 'You must provide a name.', 'ksps-resume' ) );
+		return new \WP_Error( 'no-email', __( 'You must provide a email.', 'ksps-resume' ) );
 	}
 
 	if ( empty( $args['post_name'] ) ) {
-		return new \WP_Error( 'no-name', __( 'You must provide post name.', 'ksps-resume' ) );
+		return new \WP_Error( 'no-post-name', __( 'You must provide post name.', 'ksps-resume' ) );
+	}
+
+	if ( empty( $args['phone'] ) ) {
+		return new \WP_Error( 'no-phone', __( 'You must provide Mobile No.', 'ksps-resume' ) );
+	}
+
+	if ( empty( $args['present_address'] ) ) {
+		return new \WP_Error( 'no-present-address', __( 'You must provide Present Address.', 'ksps-resume' ) );
 	}
 
 	$defaults = [
@@ -46,7 +54,7 @@ function ksps_resume_insert_resume( $args = [] ) {
 		unset( $data['id'] );
 
 		$updated = $wpdb->update(
-			$wpdb->prefix . 'applicant_submissions',
+			$wpdb->base_prefix . 'applicant_submissions',
 			$data,
 			[ 'id' => $id ],
 			[
@@ -70,7 +78,7 @@ function ksps_resume_insert_resume( $args = [] ) {
 	} else {
 
 		$inserted = $wpdb->insert(
-			$wpdb->prefix . 'applicant_submissions',
+			$wpdb->base_prefix . 'applicant_submissions',
 			$data,
 			[
 				'%s',
@@ -121,10 +129,14 @@ function ksps_resume_get_resumes( $args = [] ) {
 
 	$search = '';
 	if ( ! empty( $args['s'] ) ) {
-		$search = "WHERE first_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%' OR last_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%' OR post_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%'";
+		$search = "WHERE first_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%' 
+		OR last_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%' 
+		OR post_name LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%'
+		OR email LIKE '%" . esc_sql($wpdb->esc_like( $_REQUEST['s'] )) . "%'
+		";
 	}
 
-	$sql = "SELECT * FROM {$wpdb->prefix}applicant_submissions
+	$sql = "SELECT * FROM {$wpdb->base_prefix}applicant_submissions
     		{$search}" . $wpdb->prepare("ORDER BY {$args['orderby']} {$args['order']}
             LIMIT %d, %d", $args['offset'], $args['number'] );
 
@@ -150,7 +162,7 @@ function ksps_resume_resumes_count() {
 	$count = wp_cache_get( 'count', 'resume' );
 
 	if ( false === $count ) {
-		$count = (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}applicant_submissions" );
+		$count = (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->base_prefix}applicant_submissions" );
 
 		wp_cache_set( 'count', $count, 'resume' );
 	}
@@ -172,7 +184,7 @@ function ksps_resume_get_resume( $id ) {
 
 	if ( false === $resume ) {
 		$resume = $wpdb->get_row(
-			$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}applicant_submissions WHERE id = %d", $id )
+			$wpdb->prepare( "SELECT * FROM {$wpdb->base_prefix}applicant_submissions WHERE id = %d", $id )
 		);
 
 		wp_cache_set( 'resume-' . $id, $resume, 'resume' );
@@ -194,7 +206,7 @@ function ksps_resume_delete_resume( $id ) {
 	ksps_resume_purge_cache( $id );
 
 	return $wpdb->delete(
-		$wpdb->prefix . 'applicant_submissions',
+		$wpdb->base_prefix . 'applicant_submissions',
 		[ 'id' => $id ],
 		[ '%d' ]
 	);

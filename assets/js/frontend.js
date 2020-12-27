@@ -13,6 +13,7 @@
             errorMessage.html('');
 
             var formData = new FormData(this);
+            var form = this;
 
             $.ajax({
                 url: KspsResume.ajaxurl,
@@ -21,6 +22,7 @@
                 success: function (data) {
                     if(data.success){
                         successMessage.html('<span>'+data.data.message+'</span>');
+                        form.reset();
                     }
                     else{
                         errorMessage.html('<span>'+data.data.message+'</span>');
@@ -33,6 +35,7 @@
                 contentType: false,
                 processData: false
             });
+
 
         });
 
